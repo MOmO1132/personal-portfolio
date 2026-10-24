@@ -1,0 +1,130 @@
+# 技术设计文档
+
+版本：v1.0（2026-10-24）
+对应 PRD：v1.0
+
+---
+
+## 1. 技术选型
+
+**纯静态 HTML + CSS + 原生 JavaScript，零构建、零框架、零依赖。**
+
+| 维度 | 决策 | 理由 |
+| --- | --- | --- |
+| 技术栈 | HTML5 / CSS3 / ES2020+ 原生 JS | 本机无 Node 环境；零构建意味着任何设备双击即看、改完即生效、可托管于任何静态托管 |
+| 渲染方式 | 客户端 JS 按数据渲染（内容驱动） | 内容与结构解耦，替换资料零改代码（见第 3 节） |
+| 样式 | 手写 CSS，变量驱动主题 | 不引入 CSS 框架，避免"模板感"和冗余体积 |
+| 图标 | 内联 SVG symbol 精灵 | 无图标字体依赖，可随主题变色，可精确控制 |
+| 字体 | Google Fonts（Space Grotesk + Noto Sans SC + JetBrains Mono + Instrument Serif），系统字体栈回退 | 在线时更好看，离线/内网时自动回退系统字体，功能无损 |
+| 图片 | 本地 PNG（ImageGen 生成占位，后续替换真实截图） | 不依赖图床，换图只改 content.js 里的路径 |
+
+明确不引入：React/Vue、Tailwind、jQuery、构建工具。当前规模（单页 + 几十条数据）下引入框架只会增加迭代成本。
+
+---
+
+## 2. 目录结构
+
+```
+personal-site/
+├── index.html              # 页面骨架 + SVG 图标精灵 + SEO meta
+├── docs/
+│   ├── PRD.md              # 需求文档
+│   └── 技术设计文档.md      # 本文档
+└── assets/
+    ├── css/
+    │   └── style.css       # 全部样式（变量区 / 布局 / 组件 / 动效 / 响应式）
+    ├── js/
+    │   ├── content.js      # ★ 唯一需要改的内容文件（文案/图片/链接/项目数据）
+    │   └── main.js         # 渲染函数 + 交互逻辑（一般不需要改）
+    └── img/                # 头像、项目封面等图片
+```
+
+---
+
+## 3. 内容驱动架构（核心设计）
+
+### 3.1 单一数据源
+
+`content.js` 暴露一个全局配置对象 `SITE`，包含 meta / nav / hero / about / projects / contact / footer 七个部分。**页面上所有可见文字都出自这里。**
+
+### 3.2 渲染管线
+
+```
+content.js (数据)
+    │  window.SITE
+    ▼
+main.js 中每个栏目一个纯函数：
+    renderNav() / renderHero() / renderAbout() /
+    renderProjects() / renderContact() / renderFooter()
+    │  DOM 注入对应 <section> 容器
+    ▼
+init 阶段统一安装交互：
+    主题切换 / 移动导航 / scroll spy / 渐入动画 /
+    打字机 / 数字滚动 / 项目筛选 / 复制邮箱 / 返回顶部
+```
+
+### 3.3 迭代操作手册
+
+**替换个人资料**：只改 `content.js`，每个字段带中文注释。
+
+**新增一个项目**：在 `SITE.projects` 数组里复制一个对象、改字段即可，筛选按钮和卡片布局自动适配。
+
+**新增一个栏目**（如"博客"）：
+1. `content.js` 加 `blog: {...}` 数据段；
+2. `index.html` 加一个 `<section id="blog">` 空容器；
+3. `main.js` 加一个 `renderBlog()` 并在 `init()` 里调用；
+4. `content.js` 的 `nav` 数组加一项。
+导航、scroll spy、渐入动画自动生效。
+
+**新增一套主题**：`style.css` 复制 `:root` 变量块写成 `[data-theme="xxx"]`，`main.js` 的主题列表加一个枚举值。
+
+**新增英文版**：把 `content.js` 中字符串升级为 `{ zh: "...", en: "..." }` 结构，加一个语言切换器（沿用主题切换的 localStorage 模式）。当前版本字符串均为平铺，正是为了这一步改造量最小。
+
+---
+
+## 4. 主题系统
+
+- 所有颜色、圆角、阴影、字体定义为 CSS 自定义属性，集中在 `style.css` 顶部 `:root`（深色，默认）与 `[data-theme="light"]`（浅色）。
+- `<html>` 上的 `data-theme` 属性由 JS 切换，选择记忆于 `localStorage("site-theme")`，页面加载时先读偏好（内联脚本防闪烁，FOUC 处理）。
+- 强调色为单一荧光色（`--accent`），配合墨色（`--ink`）、细分割线（`--line`）与等宽字体标注构成视觉系统；改品牌色只需改 `--accent` 与 `--accent-ink` 两个变量。
+
+---
+
+## 5. 动画系统
+
+| 动画 | 实现 | 触发 |
+| --- | --- | --- |
+| 滚动渐入 | IntersectionObserver 给 `.reveal` 加 `.visible`，CSS transition 负责过渡 | 元素进入视口 |
+| 首屏标题遮罩上浮 | 标题逐行包 `.mask`，内层 `.mask-inner` 从 110% 位置滑入 | Hero 加载后 |
+| 数字滚动 | requestAnimationFrame 插值 0→目标值 | 统计区进入视口 |
+| 技能条 | 同滚动渐入，宽度从 0 过渡到 level% | 进入视口 |
+| 悬停微交互 | CSS `:hover`（transform / box-shadow / 图片 scale） | 指针悬停 |
+| 导航毛玻璃 | `backdrop-filter: blur()`，导航常驻半透明背景与底部分割线 | 页面加载即生效 |
+
+**可访问性降级**：`@media (prefers-reduced-motion: reduce)` 下所有过渡与动画关闭，内容直接可见。
+
+---
+
+## 6. 响应式设计
+
+- 布局：CSS Grid + Flexbox，间距用 `clamp()` 流式缩放，无横向滚动。
+- 断点：
+  - `≤1024px`：项目网格 3 列 → 2 列，关于我左右分栏 → 上下堆叠；
+  - `≤640px`：全部单列，Hero 头像移到文字下方，导航折叠为汉堡抽屉菜单。
+- 移动端菜单为全屏覆盖层，带打开/关闭动画与焦点管理。
+
+---
+
+## 7. 浏览器兼容与性能
+
+- 目标：近 4 年内的 Chrome / Edge / Firefox / Safari；不使用任何需前缀的新特性（`backdrop-filter` 有 `@supports` 回退）。
+- 性能预算：CSS + JS 总体积 < 60KB（gzip 前），首屏无阻塞资源；图片懒加载（`loading="lazy"`）。
+- SEO/分享：完整 `title` / `description` / Open Graph meta，语义化标签（header/main/section/footer/nav），h1 唯一。
+
+---
+
+## 8. 已知限制
+
+- 纯前端站点，没有后端统计与表单提交；联系功能目前是"复制邮箱 + 打开邮件客户端"。
+- JS 渲染对极端老旧的爬虫不友好，对个人作品集场景可接受；v2 如需 SEO 强化可改为构建时预渲染。
+- 占位图片为 AI 生成的示意素材，正式上线前必须替换为真实头像与项目截图。

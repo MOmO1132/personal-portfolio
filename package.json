@@ -1,0 +1,25 @@
+{
+  "name": "personal-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "个人作品集网站（数字经济专业）— Vibe Coding 课程实战项目一",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "tailwindcss": "^4.1.0",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10"
+  }
+}

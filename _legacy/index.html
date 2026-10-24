@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO / 分享卡片（内容来自 content.js，脚本加载后会自动回填 title 与 description） -->
+  <title>Momo | 个人作品集</title>
+  <meta name="description" content="个人作品集网站" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Momo | 个人作品集" />
+  <meta property="og:description" content="个人作品集网站" />
+
+  <!-- 主题偏好预加载：在 CSS 绘制前读取 localStorage，避免主题闪烁 -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("site-theme");
+        if (t === "dark" || t === "light") {
+          document.documentElement.setAttribute("data-theme", t);
+        }
+      } catch (e) { /* 隐私模式下忽略 */ }
+    })();
+  </script>
+
+  <!-- 在线字体（加载失败时自动回退系统字体，不影响功能） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230c0c0b'/%3E%3Ccircle cx='50' cy='50' r='26' fill='%23d7f94e'/%3E%3C/svg%3E" />
+</head>
+
+<body>
+  <!-- ============ 内联 SVG 图标库（通过 <use> 引用，整站统一维护） ============ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="icon-github" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m3 7 9 6 9-6"/>
+    </symbol>
+    <symbol id="icon-external" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6M20 4 11 13M9 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3"/>
+    </symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m8 8-4.5 4L8 16M16 8l4.5 4L16 16M13 5l-2 14"/>
+    </symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 9h11v11H9zM5 15H4V4h11v1"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.5 5 5 10-11"/>
+    </symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6"/>
+    </symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h10"/>
+    </symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/>
+    </symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7"/>
+    </symbol>
+    <symbol id="icon-file" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M13 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9l-6-6zM13 3v6h6"/>
+    </symbol>
+    <symbol id="icon-zhihu" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M7.6 4.2c.5-.3 1.1.1 1 .7l-.6 2.6 2.5.4c.6.1.8.8.4 1.2L8.7 11l1 3.3c.1.5-.3 1-.8 1l-.5-.1-2.3-1.5-2.2 1.4c-.5.3-1.1 0-1-.6l.9-3.2L2.2 9.5c-.5-.3-.3-1 .2-1.1l2.5-.4-.6-2.5c-.1-.6.5-1.1 1-.8l2.3 1.7 2-1.2zM14.5 3h6c.3 0 .5.2.5.5v5c0 .3-.2.5-.5.5h-6c-.3 0-.5-.2-.5-.5v-5c0-.3.2-.5.5-.5zm.5 1.4v3.2h5V4.4h-5zM13.8 11h7.4c.4 0 .8.4.8.8v7.4c0 .5-.4.8-.8.8h-7.4c-.4 0-.8-.4-.8-.8v-7.4c0-.4.4-.8.8-.8zm1.5 1.5v5.3h4.4v-5.3h-4.4zM3.5 13h6.9c.3 0 .6.3.6.6v5.8c0 .4-.3.6-.6.6H3.5c-.3 0-.6-.3-.6-.6v-5.8c0-.3.3-.6.6-.6zm1 1.2v4.2h4.9v-4.2H4.5z"/>
+    </symbol>
+    <symbol id="icon-bilibili" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M17.8 5.1 19.4 3c.4-.5.1-1.2-.6-1.2h-1.1c-.3 0-.5.1-.7.3L15.7 4H8.3L6 2.1c-.2-.2-.4-.3-.7-.3H4.2c-.7 0-1 .7-.6 1.2l1.6 2.1C3 6 1.9 7.8 1.9 9.8v7.3C1.9 19.2 3.7 21 6 21h12c2.3 0 4.1-1.8 4.1-4v-7.3c0-1.9-1.1-3.7-2.3-4.6zM8 12.6c0 .8-.6 1.4-1.4 1.4S5.2 13.4 5.2 12.6s.6-1.4 1.4-1.4S8 11.8 8 12.6zm8 0c0 .8-.6 1.4-1.4 1.4s-1.4-.6-1.4-1.4.6-1.4 1.4-1.4 1.4.6 1.4 1.4zm2.9 4.3c-.4 1.2-1.6 2-2.9 2H8c-1.3 0-2.5-.8-2.9-2-.1-.3.1-.6.4-.6h12.4c.3 0 .5.3.4.6z"/>
+    </symbol>
+  </svg>
+
+  <!-- ============ 顶部导航 ============ -->
+  <header class="nav" id="site-nav">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="#home" aria-label="回到首页">Momo<span>©</span></a>
+      <nav class="nav-links" id="nav-links" aria-label="主导航"></nav>
+      <div class="nav-actions">
+        <button class="theme-btn" id="theme-toggle" aria-label="切换深浅色主题">
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#icon-sun"/></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#icon-moon"/></svg>
+          <span class="theme-label">深色</span>
+        </button>
+        <button class="icon-btn nav-burger" id="nav-burger" aria-label="打开菜单" aria-expanded="false">
+          <svg class="icon icon-menu" aria-hidden="true"><use href="#icon-menu"/></svg>
+          <svg class="icon icon-close" aria-hidden="true"><use href="#icon-close"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 移动端全屏菜单 -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true"></div>
+
+  <!-- ============ 主体内容（由各栏目渲染函数填充） ============ -->
+  <main>
+    <section id="home" class="hero"></section>
+    <div class="marquee" id="marquee" aria-hidden="true"></div>
+    <section id="about" class="section"></section>
+    <section id="projects" class="section"></section>
+    <section id="contact" class="section"></section>
+  </main>
+
+  <footer class="footer" id="site-footer"></footer>
+
+  <button class="to-top" id="to-top" aria-label="返回顶部">
+    TOP <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"/></svg>
+  </button>
+
+  <!-- 按顺序加载：内容数据 → 渲染与交互逻辑 -->
+  <script src="assets/js/content.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
