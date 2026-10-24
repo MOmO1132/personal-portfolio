@@ -47,7 +47,7 @@ export const hero = {
   /** 主按钮 */
   primaryButton: { label: "查看项目", href: "#projects" },
   /** 次按钮（链接填你的 GitHub 主页，没有就先保留 #） */
-  secondaryButton: { label: "GitHub", href: "#" }, // 【待填】GitHub 主页链接
+  secondaryButton: { label: "GitHub", href: "https://github.com/MOmO1132" },
   /** 底部数据统计 —— 只写真实数字 */
   stats: [
     { value: 5, suffix: "", label: "课程实战项目" },
@@ -160,11 +160,11 @@ export const projects = {
       status: "done",
       year: "2026",
       description:
-        "课程第一个实战项目：按「需求研究 → PRD → 技术设计 → AGENTS 规范 → 开发 → 部署」的完整流程，用 React + TypeScript + Vite + Tailwind CSS 搭建的个人网站，实现了深色主题、滚动动画、移动端适配和 Vercel 部署。",
+        "课程第一个实战项目：按「需求研究 → PRD → 技术设计 → AGENTS 规范 → 开发 → 部署」的完整流程，用 React + TypeScript + Vite + Tailwind CSS 搭建的个人网站，实现了深色主题、滚动动画、移动端适配，并通过 GitHub Pages 发布到公网。",
       image: "img/project-5.png",
       tech: ["React", "TypeScript", "Vite", "Tailwind CSS"],
-      demoUrl: "#", // 【待填】Vercel 部署链接
-      githubUrl: "#", // 【待填】GitHub 仓库链接
+      demoUrl: "https://momO1132.github.io/personal-portfolio/",
+      githubUrl: "https://github.com/MOmO1132/personal-portfolio",
     },
     {
       id: "todo",
@@ -232,8 +232,8 @@ export const contact = {
   socials: [
     {
       label: "GitHub",
-      handle: "1548274873@qq.com", // 【待填】主页链接：把 # 换成 https://github.com/你的用户名
-      url: "#",
+      handle: "MOmO1132",
+      url: "https://github.com/MOmO1132",
       icon: "github",
     },
     {
