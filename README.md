@@ -26,13 +26,21 @@ npm run preview    # 本地预览构建产物
 
 改完后运行 `npm run build` 重新生成 `dist/`。也可以直接把需求发给 AI 助手让它帮你改。
 
-## 部署到 Vercel（课程要求）
+## 部署（已上线）
 
-1. 把代码推送到 GitHub 仓库（`node_modules` 和 `dist` 已在 `.gitignore` 中排除）
-2. 登录 [Vercel](https://vercel.com)，Import 该仓库
-3. Framework Preset 选 **Vite**，其余保持默认，点击 Deploy
-4. 等待构建完成，得到一个 `xxx.vercel.app` 的公网链接
-5. 把这个链接填回 `content.ts` 里本站的 `demoUrl`，重新构建部署一次
+本站已通过 **GitHub Pages** 发布到公网：
+
+- 仓库：<https://github.com/MOmO1132/personal-portfolio>
+- 线上地址：<https://momo1132.github.io/personal-portfolio/>
+
+发布流程：把代码推送到 GitHub 仓库后，运行 `npm run build` 生成 `dist/`，
+将构建产物推送到仓库的 `gh-pages` 分支，在仓库 Settings → Pages 中选择
+「Deploy from a branch → gh-pages → /（root）」即可。之后每次更新内容：
+改 `content.ts` → `npm run build` → 把新产物覆盖到 `gh-pages` 分支。
+
+> 课程文档也推荐 Vercel 方案：登录 [Vercel](https://vercel.com) 用 GitHub 账号
+> Import 本仓库，Framework Preset 选 **Vite**，Deploy 后即可获得
+> `xxx.vercel.app` 链接。二者任选其一即可公网访问。
 
 ## 目录结构
 
